@@ -1,0 +1,26 @@
+{
+  "name": "express-app",
+  "version": "1.0.0",
+  "description": "Training express app",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/Lukaskaras/express-app.git"
+  },
+  "keywords": [
+    "express"
+  ],
+  "author": "lukas k",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lukaskaras/express-app/issues"
+  },
+  "homepage": "https://github.com/Lukaskaras/express-app#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "nodemon": "^1.14.5"
+  }
+}
