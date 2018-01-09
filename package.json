@@ -4,7 +4,8 @@
   "description": "Training express app",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "dev": "nodemon app"
   },
   "repository": {
     "type": "git",
