@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost/testaroo')
+mongoose.connect('mongodb://localhost/shoppinglists')
 
 mongoose.connection.once('open', () => {
   console.log('connection made')
