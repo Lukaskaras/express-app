@@ -1,65 +1,17 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
-const user = require('./user')
-const connection = require('./connection')
 
 app.use(bodyParser.json({ limit: '5mb' }))
 app.use(bodyParser.urlencoded({ limit: '5mb', extended: false }))
-app.post('/item/:userName/:listName', (req, res) => {
-  const newItem = {
-    name: req.body.name,
-    quantity: req.body.quantity,
-    unit: req.body.unit
-  }
-  user.findOneAndUpdate({
-    'name': req.params.userName,
-    'shoppingLists.name': req.params.listName
-  }, {
-    $addToSet: {
-      'shoppingLists.$.items': newItem
-    }
-  }, (err, item) => {
-    if (err) {
-      return res.status(500).send('There was an issue')
-    } res.status(200).send(item)
-  })
+
+app.use((req, res, next) => {
+  console.log('calling ' + req.method + ' for ' + req.path + ' -> ' + JSON.stringify(req.query) + ' -> ' + JSON.stringify(req.body))
+
+  next()
 })
 
-app.post('/user', (req, res) => {
-  user.create({
-    id: req.body.id,
-    name: req.body.name,
-    shoppingLists: req.body.shoppingLists
-  }, (err, user) => {
-    if (err) {
-      return res.status(500).send('There was an issue')
-    } res.status(200).send(user)
-  })
-})
-
-app.post('/shopping-list/:userName', (req, res) => {
-  const list = {
-    id: req.body.id,
-    name: req.body.name,
-    items: req.body.items
-  }
-  user.update({ 'name': req.params.userName }, {
-    $addToSet: {
-      shoppingLists: list
-    }
-  }, (err, item) => {
-    if (err) {
-      return res.status(500).send('There was an issue')
-    } res.status(200).send(user)
-  })
-})
-
-app.get('/', (req, res) => {
-  res.send(user.find({
-    name: 'user'
-  }))
-})
+app.use('/', require('./routes/index'))
 
 app.listen(3000, () => {
   console.log('listening on port 3000')
