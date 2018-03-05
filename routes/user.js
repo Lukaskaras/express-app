@@ -1,9 +1,9 @@
-const db = require( '../database')
+const db = require('../database')
 const express = require('express')
 const router = express.Router()
 
 router.post('/', (req, res) => {
-  db.exec(`INSERT INTO users (${req.body.id}, "${req.body.name}")`)
+  db.exec(`INSERT INTO users (name) VALUES ("${req.body.name}")`)
   res.status(200).send('{User successfully created')
 })
 
