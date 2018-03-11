@@ -4,7 +4,7 @@ const router = express.Router()
 
 router.post('/', (req, res) => {
   db.exec(`INSERT INTO users (name) VALUES ("${req.body.name}")`)
-  res.status(200).send('{User successfully created')
+  res.status(200).send('User successfully created')
 })
 
 router.get('/:id', (req, res) => {
