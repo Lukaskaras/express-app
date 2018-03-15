@@ -15,21 +15,21 @@ const userBody = {
   name: 'testUser'
 }
 
-describe('Item', () => {
+describe('Items', () => {
   test('Create user, add item', () => {
     return request(app)
-      .post('/user')
+      .post('/users')
       .send(userBody)
       .expect(200)
       .then(() => request(app)
-        .post('/item')
+        .post('/items')
         .send(itemBody)
         .expect(200)
       )
   })
   test('Get item by id', () => {
     return request(app)
-      .get(`/item/${itemBody.id}`)
+      .get(`/items/${itemBody.id}`)
       .expect(200)
       .then((res) => {
         expect(JSON.parse(res.text)).toEqual((itemBody))
@@ -37,10 +37,27 @@ describe('Item', () => {
   })
   test('Delete item by id', () => {
     return request(app)
-      .delete(`/item/${itemBody.id}`)
+      .delete(`/items/${itemBody.id}`)
       .expect(200)
       .then(() => request(app)
-        .get(`/item/${itemBody.id}`)
+        .get(`/items/${itemBody.id}`)
+        .expect(404)
+      )
+  })
+  test('Add items, delete all', () => {
+    return request(app)
+      .post('/items')
+      .send({name: itemBody.name, userId: userBody.id, quantity: itemBody.quantity, unit: itemBody.unit})
+      .expect(200)
+      .then(() => request(app)
+        .post('/items')
+        .send({name: itemBody.name, userId: userBody.id, quantity: itemBody.quantity, unit: itemBody.unit})
+        .expect(200)
+      ).then(() => request(app)
+        .delete(`/items/user/${userBody.id}`)
+        .expect(200)
+      ).then(() => request(app)
+        .get(`/items/${itemBody.id}`)
         .expect(404)
       )
   })

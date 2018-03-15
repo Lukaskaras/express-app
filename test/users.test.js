@@ -8,9 +8,9 @@ const userBody = {
 }
 
 describe('Users', () => {
-  test('When creating new user, user is created', () => {
+  test('Create new user', () => {
     return request(app)
-      .post('/user')
+      .post('/users')
       .send(userBody)
       .expect(200)
   })
@@ -20,9 +20,9 @@ describe('Users', () => {
     expect(result[0]).toEqual(userBody)
   })
 
-  test('/user - Get user', () => {
+  test('Get user by id', () => {
     return request(app)
-      .get(`/user/${userBody.id}`)
+      .get(`/users/${userBody.id}`)
       .expect(200)
       .then((res) => {
         expect(JSON.parse(res.text)).toEqual(userBody)

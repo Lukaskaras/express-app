@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --forceExit",
     "dev": "nodemon app",
-    "lint": "eslint ./"
+    "lint": "eslint ./",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
