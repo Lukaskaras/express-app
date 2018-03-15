@@ -9,6 +9,9 @@ router.post('/', (req, res) => {
 
 router.get('/', (req, res) => {
   const result = db.exec(`SELECT * FROM items`)
+  if (result.length === 0) {
+    res.status(404).send('There are no items')
+  }
   res.status(200).send(JSON.stringify(result))
 })
 

@@ -35,6 +35,11 @@ describe('Items', () => {
         expect(JSON.parse(res.text)).toEqual((itemBody))
       })
   })
+  test('Get all items', () => {
+    return request(app)
+      .get('/items')
+      .expect(200)
+  })
   test('Delete item by id', () => {
     return request(app)
       .delete(`/items/${itemBody.id}`)
