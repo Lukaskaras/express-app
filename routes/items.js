@@ -1,8 +1,9 @@
 const db = require('../database')
 const express = require('express')
 const router = express.Router()
+const isLoggedIn = require('../helpers/is-logged-in')
 
-router.post('/', (req, res) => {
+router.post('/', isLoggedIn, (req, res) => {
   db.exec(`INSERT INTO items (name, userId, quantity, unit) VALUES ("${req.body.name}", ${req.body.userId}, ${req.body.quantity}, "${req.body.unit}")`)
   res.status(200).send('item is saved')
 })

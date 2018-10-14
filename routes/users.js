@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 
 router.post('/', (req, res) => {
-  db.exec(`INSERT INTO users (name) VALUES ("${req.body.name}")`)
+  db.exec(`INSERT INTO users (name, password) VALUES ("${req.body.name}", "${req.body.password}")`)
   res.status(200).send('User successfully created')
 })
 
