@@ -5,7 +5,6 @@ const session = require('express-session')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const db = require('./database')
-const secret = 'secret'
 
 app.use(bodyParser.json({ limit: '5mb' }))
 app.use(bodyParser.urlencoded({ limit: '5mb', extended: false }))
@@ -19,22 +18,17 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 passport.serializeUser(function (user, done) {
-  console.log('blaeb')
-  console.log(user)
   done(null, user)
 })
 
 passport.deserializeUser(function (id, done) {
-  console.log('id' + id)
   const user = db.exec(`SELECT * FROM users WHERE id=${id}`)
   done(null, user)
 })
 
 passport.use(new LocalStrategy(
   function (username, password, done) {
-    // Match Username
     const user = db.exec(`SELECT * FROM users WHERE name = "${username}"`)
-    console.log(user)
     if (user.length === 0) {
       return done(null, false, {message: 'Incorrect username.'})
     }
