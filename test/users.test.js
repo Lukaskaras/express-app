@@ -4,7 +4,8 @@ const db = require('../database')
 
 const userBody = {
   id: 1,
-  name: 'testUser'
+  username: 'testUser',
+  password: 'testPassword'
 }
 
 describe('Users', () => {
@@ -13,11 +14,6 @@ describe('Users', () => {
       .post('/users')
       .send(userBody)
       .expect(200)
-  })
-
-  test('User is stored in database', () => {
-    const result = db.exec(`SELECT * FROM users WHERE id=${userBody.id}`)
-    expect(result[0]).toEqual(userBody)
   })
 
   test('Get user by id', () => {

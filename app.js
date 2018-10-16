@@ -28,14 +28,14 @@ passport.deserializeUser(function (id, done) {
 
 passport.use(new LocalStrategy(
   function (username, password, done) {
-    const user = db.exec(`SELECT * FROM users WHERE name = "${username}"`)
+    const user = db.exec(`SELECT * FROM users WHERE username = "${username}"`)
     if (user.length === 0) {
       return done(null, false, {message: 'Incorrect username.'})
     }
     if (user[0].password !== password) {
       return done(null, false, {message: 'Incorrect password.'})
     }
-    return done(null, user[0].name)
+    return done(null, user[0].username)
   })
 )
 

@@ -3,7 +3,13 @@ const express = require('express')
 const router = express.Router()
 
 router.post('/', (req, res) => {
-  db.exec(`INSERT INTO users (name, password) VALUES ("${req.body.name}", "${req.body.password}")`)
+  if (!req.body.username) {
+    res.status(400).send('Username not provided')
+  }
+  if (!req.body.password) {
+    res.status(400).send('Password not provided')
+  }
+  db.exec(`INSERT INTO users (username, password) VALUES ("${req.body.username}", "${req.body.password}")`)
   res.status(200).send('User successfully created')
 })
 
