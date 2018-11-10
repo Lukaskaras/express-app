@@ -12,31 +12,24 @@ const itemBody = {
 
 const userBody = {
   id: 1,
-  username: 'testUser',
-  password: 'testPassword'
+  name: 'testUser'
 }
 
 describe('Items', () => {
-  test('Create user, login', () => {
+  test('Create user, add item', () => {
     return request(app)
       .post('/users')
       .send(userBody)
       .expect(200)
       .then(() => request(app)
-        .post('/login')
-        .send(userBody)
+        .post('/items')
+        .send(itemBody)
         .expect(200)
-        .then((res) => {
-          expect(JSON.parse(res.text)).toEqual({
-            token: userBody.username
-          })
-        })
       )
   })
   test('Get item by id', () => {
     return request(app)
       .get(`/items/${itemBody.id}`)
-      .set('Authorization', `bearer ${userBody.username}`)
       .expect(200)
       .then((res) => {
         expect(JSON.parse(res.text)).toEqual((itemBody))
