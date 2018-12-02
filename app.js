@@ -1,7 +1,14 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
+const dotenv = require('dotenv')
+const { connectMongo } = require('./mongo')
 
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.load()
+}
+
+connectMongo()
 app.use(bodyParser.json({ limit: '5mb' }))
 app.use(bodyParser.urlencoded({ limit: '5mb', extended: false }))
 
@@ -10,11 +17,11 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use('/', require('./routes/index'))
+app.use('/', require('./src/routes/index'))
 
 if (process.env.NODE_ENV !== 'test') {
-  app.listen(3000, () => {
-    console.log('listening on port 3000')
+  app.listen(3500, () => {
+    console.log('listening on port 3500')
   })
 }
 

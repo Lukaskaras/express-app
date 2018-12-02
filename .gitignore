@@ -60,3 +60,5 @@ typings/
 # others
 *.xml
 *.iml
+
+.env
