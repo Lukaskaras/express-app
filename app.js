@@ -1,7 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
+const dotenv = require('dotenv')
 const { connectMongo } = require('./mongo')
+
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.load()
+}
 
 connectMongo()
 app.use(bodyParser.json({ limit: '5mb' }))
