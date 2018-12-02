@@ -20,21 +20,4 @@ router.get('/:userId', async (req, res) => {
   res.status(200).json(result)
 })
 
-router.delete('/:id', (req, res) => {
-  const result = db.exec(`DELETE FROM items WHERE id=${req.params.id}`)
-  if (result === 1) {
-    res.status(200).send('The item was successfully deleted')
-  } else {
-    res.status(404).send('The item does not exist')
-  }
-})
-
-router.delete('/user/:userId', (req, res) => {
-  const result = db.exec(`DELETE FROM items WHERE userId=${req.params.userId}`)
-  if (result === 0) {
-    res.status(404).send('There are no items to delete')
-  } else {
-    res.status(200).send('All your items were deleted')
-  }
-})
 module.exports = router
