@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const { saveUser } = require('./helpers/db')
+const { saveUser, getUser } = require('../helpers/db')
+const { isCorrectPassword, jwtSign } = require('../helpers/auth')
 
 router.post('/register', async (req, res) => {
   const { email, password, uid, name } = req.body
@@ -12,6 +13,19 @@ router.post('/register', async (req, res) => {
   } else {
     res.status(400).send('Unable to register')
   }
+})
+
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body
+  const result = await getUser(email)
+  let token
+  if (result) {
+    if (isCorrectPassword(result.password, password)) {
+      delete result.password
+      token = jwtSign(result)
+    }
+  }
+  res.status(200).send({ token })
 })
 
 module.exports = router

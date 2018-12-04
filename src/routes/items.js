@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { saveItem, getItemsForUid } = require('./helpers/db')
+const { saveItem, getItemsForUid } = require('../helpers/db')
 
 router.post('/', async (req, res) => {
   const { name, quantity, uid } = req.body
