@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 
 const secret = process.env.JWT_SECRET
 
-const isCorrectPassword = (dbPassword, formPassword) => {
-  return dbPassword === formPassword
+const isCorrectPassword = async (dbPassword, formPassword) => {
+  return bcrypt.compare(formPassword, dbPassword)
 }
 
 const jwtSign = (user) => {

@@ -2,7 +2,8 @@ const User = require('../models/user')
 const Item = require('../models/item')
 
 const saveUser = async (user) => {
-  return User.create(user)
+  const newUser = new User(user)
+  return newUser.save()
 }
 
 const saveItem = async (item) => {

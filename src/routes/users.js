@@ -20,11 +20,14 @@ router.post('/login', async (req, res) => {
   const result = await getUser(email)
   let token
   if (result) {
-    if (isCorrectPassword(result.password, password)) {
-      delete result.password
-      token = jwtSign(result)
+    const correctPassword = await isCorrectPassword(result.password, password)
+    if (!correctPassword) {
+      res.status(401).send({ message: 'Incorrect password' })
+      return
     }
   }
+  delete result.password
+  token = jwtSign(result)
   res.status(200).send({ token })
 })
 
