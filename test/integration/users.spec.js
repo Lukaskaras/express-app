@@ -4,10 +4,12 @@ const app = require('../../app')
 const { expect } = require('chai')
 const User = require('../../src/models/user')
 const jwt = require('jsonwebtoken')
+const { isCorrectPassword } = require('../../src/helpers/auth')
+const bcrypt = require('bcrypt')
 
 describe('/users', async () => {
   it('should store users', async () => {
-    const createUserStub = sinon.stub(User, 'create')
+    const createUserStub = sinon.stub(User.prototype, 'save')
     createUserStub.resolves({_id: '1'})
     const response = await request(app)
       .post('/users/register')
@@ -21,6 +23,8 @@ describe('/users', async () => {
     expect(response.body._id).to.equal('1')
   })
   it('should log user in', async () => {
+    const bcryptCompareStub = sinon.stub(bcrypt, 'compare')
+    bcryptCompareStub.returns(true)
     const findUserStub = sinon.stub(User, 'findOne')
     findUserStub.returns({
       lean: () => {

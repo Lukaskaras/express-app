@@ -3,6 +3,7 @@ const sinon = require('sinon')
 const app = require('../../app')
 const { expect } = require('chai')
 const Item = require('../../src/models/item')
+const auth = require('../../src/middleware/auth')
 
 describe('/items', async () => {
   it('should store items', async () => {

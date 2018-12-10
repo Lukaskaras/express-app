@@ -6,6 +6,11 @@ const { isCorrectPassword, jwtSign } = require('../helpers/auth')
 router.post('/register', async (req, res) => {
   const { email, password, uid, name } = req.body
   const user = { email, password, uid, name }
+  const exists = await getUser(email)
+  if (exists) {
+    res.status(400).json()
+  }
+  // TODO check if email is not existing in db
   const result = await saveUser(user)
   const { _id } = result
   if (_id) {

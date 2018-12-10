@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { saveItem, getItemsForUid } = require('../helpers/db')
+const { withAuth } = require('../middleware/auth')
 
 router.post('/', async (req, res) => {
   const { name, quantity, uid } = req.body
@@ -14,7 +15,7 @@ router.post('/', async (req, res) => {
   }
 })
 
-router.get('/:userId', async (req, res) => {
+router.get('/:userId', withAuth, async (req, res) => {
   const userId = req.params.userId
   const result = await getItemsForUid(userId)
   res.status(200).json(result)
