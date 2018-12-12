@@ -26,6 +26,7 @@ describe('/items', async () => {
     const response = await request(app)
       .get('/items/1')
       .expect(200)
+      .set('x-access-token', '4c5192e4-0c8b-41cb-a9ed-bed32205f398')
     expect(response.body[0]._id).to.equal('1')
   })
 })
