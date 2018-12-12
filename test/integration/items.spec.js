@@ -3,7 +3,6 @@ const sinon = require('sinon')
 const app = require('../../app')
 const { expect } = require('chai')
 const Item = require('../../src/models/item')
-const auth = require('../../src/middleware/auth')
 
 describe('/items', async () => {
   it('should store items', async () => {
@@ -27,6 +26,7 @@ describe('/items', async () => {
     const response = await request(app)
       .get('/items/1')
       .expect(200)
+      .set('x-access-token', '4c5192e4-0c8b-41cb-a9ed-bed32205f398')
     expect(response.body[0]._id).to.equal('1')
   })
 })

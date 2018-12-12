@@ -11,6 +11,12 @@ describe('/users', async () => {
   it('should store users', async () => {
     const createUserStub = sinon.stub(User.prototype, 'save')
     createUserStub.resolves({_id: '1'})
+    const findUserStub = sinon.stub(User, 'findOne')
+    findUserStub.returns({
+      lean: () => {
+        return null
+      }
+    })
     const response = await request(app)
       .post('/users/register')
       .send({
@@ -21,6 +27,7 @@ describe('/users', async () => {
       })
       .expect(200)
     expect(response.body._id).to.equal('1')
+    findUserStub.restore()
   })
   it('should log user in', async () => {
     const bcryptCompareStub = sinon.stub(bcrypt, 'compare')
@@ -46,5 +53,7 @@ describe('/users', async () => {
       .expect(200)
     const token = jwt.decode(response.body.token)
     expect(token.email).to.equal('test@test.sk')
+    bcryptCompareStub.restore()
+    findUserStub.restore()
   })
 })
