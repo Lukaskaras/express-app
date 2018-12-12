@@ -4,7 +4,6 @@ const app = require('../../app')
 const { expect } = require('chai')
 const User = require('../../src/models/user')
 const jwt = require('jsonwebtoken')
-const { isCorrectPassword } = require('../../src/helpers/auth')
 const bcrypt = require('bcrypt')
 
 describe('/users', async () => {
