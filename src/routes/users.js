@@ -10,7 +10,6 @@ router.post('/register', async (req, res) => {
   if (exists) {
     res.status(400).json()
   }
-  // TODO check if email is not existing in db
   const result = await saveUser(user)
   const { _id } = result
   if (_id) {
