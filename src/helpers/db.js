@@ -29,4 +29,9 @@ const getUser = async (email) => {
   }).lean()
 }
 
-module.exports = { saveUser, saveItem, getItemsForUserId, getUser }
+const deleteItem = async (itemId) => {
+  const response = await Item.findByIdAndRemove(itemId)
+  return response
+}
+
+module.exports = { saveUser, saveItem, getItemsForUserId, getUser, deleteItem }

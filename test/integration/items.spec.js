@@ -29,4 +29,14 @@ describe('/items', async () => {
       .set('x-access-token', '4c5192e4-0c8b-41cb-a9ed-bed32205f398')
     expect(response.body[0]._id).to.equal('1')
   })
+  it('should delete item', async () => {
+    const findByIdAndRemoveStub = sinon.stub(Item, 'findByIdAndRemove')
+    findByIdAndRemoveStub.resolves({ _id: '1' })
+    const response = await request(app)
+      .delete('/items/1')
+      .expect(200)
+      .set('x-access-token', '4c5192e4-0c8b-41cb-a9ed-bed32205f398')
+    expect(response.body._id).to.equal('1')
+    expect(findByIdAndRemoveStub.called).to.be.true
+  })
 })
