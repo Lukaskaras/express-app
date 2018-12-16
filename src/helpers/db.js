@@ -1,5 +1,6 @@
 const User = require('../models/user')
 const Item = require('../models/item')
+const mongoose = require('mongoose')
 
 const saveUser = async (user) => {
   const newUser = new User(user)
@@ -7,12 +8,18 @@ const saveUser = async (user) => {
 }
 
 const saveItem = async (item) => {
-  return Item.create(item)
+  const { name, quantity, userId } = item
+  const superItem = {
+    name,
+    quantity,
+    userId: mongoose.Types.ObjectId(userId)
+  }
+  return Item.create(superItem)
 }
 
-const getItemsForUid = async (uid) => {
+const getItemsForUserId = async (userId) => {
   return Item.find({
-    uid
+    userId
   })
 }
 
@@ -22,4 +29,4 @@ const getUser = async (email) => {
   }).lean()
 }
 
-module.exports = { saveUser, saveItem, getItemsForUid, getUser }
+module.exports = { saveUser, saveItem, getItemsForUserId, getUser }

@@ -21,8 +21,7 @@ describe('/users', async () => {
       .send({
         email: 'test@user.sk',
         password: 'test',
-        name: 'test',
-        uid: 23
+        name: 'test'
       })
       .expect(200)
     expect(response.body._id).to.equal('1')
@@ -38,7 +37,7 @@ describe('/users', async () => {
           _id: 'testId',
           email: 'test@test.sk',
           password: 'test',
-          uid: 1,
+          uid: '1',
           name: 'testName'
         }
       }

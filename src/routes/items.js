@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const { saveItem, getItemsForUid } = require('../helpers/db')
+const { saveItem, getItemsForUserId } = require('../helpers/db')
 const { withAuth } = require('../middleware/auth')
 
 router.post('/', async (req, res) => {
-  const { name, quantity, uid } = req.body
-  const item = { name, quantity, uid }
+  const { name, quantity, userId } = req.body
+  const item = { name, quantity, userId }
   const result = await saveItem(item)
   const { _id } = result
   if (_id) {
@@ -17,7 +17,7 @@ router.post('/', async (req, res) => {
 
 router.get('/:userId', withAuth, async (req, res) => {
   const userId = req.params.userId
-  const result = await getItemsForUid(userId)
+  const result = await getItemsForUserId(userId)
   res.status(200).json(result)
 })
 
