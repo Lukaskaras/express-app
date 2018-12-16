@@ -13,7 +13,7 @@ describe('/items', async () => {
       .send({
         name: 'testItem',
         quantity: 1,
-        uid: 23
+        uid: '23'
       })
       .expect(200)
     expect(response.body._id).to.equal('1')

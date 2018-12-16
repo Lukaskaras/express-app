@@ -32,7 +32,7 @@ router.post('/login', async (req, res) => {
   }
   delete result.password
   token = jwtSign(result)
-  res.status(200).send({ token })
+  res.status(200).send({ token, userId: result._id })
 })
 
 module.exports = router
