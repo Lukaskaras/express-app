@@ -5,6 +5,7 @@ const dotenv = require('dotenv')
 const { connectMongo } = require('./mongo')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
+const config = require('config')
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.load()
@@ -24,10 +25,10 @@ app.use((req, res, next) => {
 
 app.use('/', require('./src/routes/index'))
 
-// TODO: move port to config
+const port = config.get('port')
 if (process.env.NODE_ENV !== 'test') {
-  app.listen(3500, () => {
-    console.log('listening on port 3500')
+  app.listen(port, () => {
+    console.log(`listening on port ${port}`)
   })
 }
 
