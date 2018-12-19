@@ -8,14 +8,15 @@ router.post('/register', async (req, res) => {
   const user = { email, password, uid, name }
   const exists = await getUser(email)
   if (exists) {
-    res.status(400).json()
+    res.status(400).json({ message: 'Email already exists' })
+    return
   }
   const result = await saveUser(user)
   const { _id } = result
   if (_id) {
     res.status(200).json(result)
   } else {
-    res.status(400).send('Unable to register')
+    res.status(500).send({ message: 'Unable to register' })
   }
 })
 

@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 
 app.use('/', require('./src/routes/index'))
 
-const port = config.get('port')
+const port = process.env.PORT || config.get('port')
 if (process.env.NODE_ENV !== 'test') {
   app.listen(port, () => {
     console.log(`listening on port ${port}`)
