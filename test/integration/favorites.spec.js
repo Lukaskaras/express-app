@@ -2,39 +2,38 @@ const request = require('supertest')
 const sinon = require('sinon')
 const app = require('../../app')
 const { expect } = require('chai')
-const Item = require('../../src/models/item')
+const FavoriteItem = require('../../src/models/favorite-item')
 
-describe('/items', async () => {
-  it('should store items', async () => {
-    const createItemStub = sinon.stub(Item, 'create')
-    createItemStub.resolves({ _id: '1' })
+describe('/favorites', async () => {
+  it('should store favorite items', async () => {
+    const createFavoriteStub = sinon.stub(FavoriteItem, 'create')
+    createFavoriteStub.resolves({ _id: '1' })
     const response = await request(app)
-      .post('/items')
+      .post('/favorites')
       .send({
         name: 'testItem',
-        quantity: 1,
         uid: '23'
       })
-      .set('x-access-token', '4c5192e4-0c8b-41cb-a9ed-bed32205f398')
       .expect(200)
+      .set('x-access-token', '4c5192e4-0c8b-41cb-a9ed-bed32205f398')
     expect(response.body._id).to.equal('1')
   })
-  it('should retrieve items', async () => {
-    const findItemStub = sinon.stub(Item, 'find')
-    findItemStub.resolves([{
+  it('should retrieve favorites', async () => {
+    const findFavoriteStub = sinon.stub(FavoriteItem, 'find')
+    findFavoriteStub.resolves([{
       _id: '1'
     }])
     const response = await request(app)
-      .get('/items/1')
+      .get('/favorites/1')
       .expect(200)
       .set('x-access-token', '4c5192e4-0c8b-41cb-a9ed-bed32205f398')
     expect(response.body[0]._id).to.equal('1')
   })
-  it('should delete item', async () => {
-    const findByIdAndRemoveStub = sinon.stub(Item, 'findByIdAndRemove')
+  it('should delete favorite item', async () => {
+    const findByIdAndRemoveStub = sinon.stub(FavoriteItem, 'findByIdAndRemove')
     findByIdAndRemoveStub.resolves({ _id: '1' })
     const response = await request(app)
-      .delete('/items/1')
+      .delete('/favorites/1')
       .expect(200)
       .set('x-access-token', '4c5192e4-0c8b-41cb-a9ed-bed32205f398')
     expect(response.body._id).to.equal('1')
