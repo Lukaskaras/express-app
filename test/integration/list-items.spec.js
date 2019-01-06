@@ -2,14 +2,14 @@ const request = require('supertest')
 const sinon = require('sinon')
 const app = require('../../app')
 const { expect } = require('chai')
-const Item = require('../../src/models/item')
+const ListItem = require('../../src/models/list-item')
 
-describe('/items', async () => {
-  it('should store items', async () => {
-    const createItemStub = sinon.stub(Item, 'create')
-    createItemStub.resolves({ _id: '1' })
+describe('/list-items', async () => {
+  it('should store list items', async () => {
+    const createListItemStub = sinon.stub(ListItem, 'create')
+    createListItemStub.resolves({ _id: '1' })
     const response = await request(app)
-      .post('/items')
+      .post('/listItems')
       .send({
         name: 'testItem',
         quantity: 1,
@@ -18,29 +18,25 @@ describe('/items', async () => {
       .set('x-access-token', '4c5192e4-0c8b-41cb-a9ed-bed32205f398')
       .expect(200)
     expect(response.body._id).to.equal('1')
-    createItemStub.restore()
+    createListItemStub.restore()
   })
-  it('should retrieve all items', async () => {
-    const findItemStub = sinon.stub(Item, 'find')
-    findItemStub.resolves([{
-      _id: '1',
-      name: 'test'
+  it('should retrieve list items', async () => {
+    const findListItemStub = sinon.stub(ListItem, 'find')
+    findListItemStub.resolves([{
+      _id: '1'
     }])
     const response = await request(app)
-      .get('/items')
+      .get('/listItems/1')
       .expect(200)
       .set('x-access-token', '4c5192e4-0c8b-41cb-a9ed-bed32205f398')
-    expect(response.body).to.deep.equal([{
-      _id: '1',
-      name: 'test'
-    }])
-    findItemStub.restore()
+    expect(response.body[0]._id).to.equal('1')
+    findListItemStub.restore()
   })
-  it('should delete item', async () => {
-    const findByIdAndRemoveStub = sinon.stub(Item, 'findByIdAndRemove')
+  it('should delete list item', async () => {
+    const findByIdAndRemoveStub = sinon.stub(ListItem, 'findByIdAndRemove')
     findByIdAndRemoveStub.resolves({ _id: '1' })
     const response = await request(app)
-      .delete('/items/1')
+      .delete('/listItems/1')
       .expect(200)
       .set('x-access-token', '4c5192e4-0c8b-41cb-a9ed-bed32205f398')
     expect(response.body._id).to.equal('1')

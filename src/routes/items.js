@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { saveItem, getItemsForUserId, deleteItem } = require('../helpers/db')
+const { saveItem, deleteItem, getAllItems } = require('../helpers/db')
 const { withAuth } = require('../middleware/auth')
 
 router.post('/', withAuth, async (req, res) => {
@@ -15,15 +15,14 @@ router.post('/', withAuth, async (req, res) => {
   }
 })
 
-router.get('/:userId', withAuth, async (req, res) => {
-  const userId = req.params.userId
-  const result = await getItemsForUserId(userId)
-  res.status(200).json(result)
-})
-
 router.delete('/:itemId', withAuth, async (req, res) => {
   const { itemId } = req.params
   const result = await deleteItem(itemId)
+  res.status(200).json(result)
+})
+
+router.get('', withAuth, async (req, res) => {
+  const result = await getAllItems()
   res.status(200).json(result)
 })
 

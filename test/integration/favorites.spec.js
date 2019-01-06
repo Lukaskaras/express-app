@@ -17,6 +17,7 @@ describe('/favorites', async () => {
       .expect(200)
       .set('x-access-token', '4c5192e4-0c8b-41cb-a9ed-bed32205f398')
     expect(response.body._id).to.equal('1')
+    createFavoriteStub.restore()
   })
   it('should retrieve favorites', async () => {
     const findFavoriteStub = sinon.stub(FavoriteItem, 'find')
@@ -28,6 +29,7 @@ describe('/favorites', async () => {
       .expect(200)
       .set('x-access-token', '4c5192e4-0c8b-41cb-a9ed-bed32205f398')
     expect(response.body[0]._id).to.equal('1')
+    findFavoriteStub.restore()
   })
   it('should delete favorite item', async () => {
     const findByIdAndRemoveStub = sinon.stub(FavoriteItem, 'findByIdAndRemove')
@@ -38,5 +40,6 @@ describe('/favorites', async () => {
       .set('x-access-token', '4c5192e4-0c8b-41cb-a9ed-bed32205f398')
     expect(response.body._id).to.equal('1')
     expect(findByIdAndRemoveStub.called).to.be.true
+    findByIdAndRemoveStub.restore()
   })
 })

@@ -1,6 +1,7 @@
 const User = require('../models/user')
 const Item = require('../models/item')
 const FavoriteItem = require('../models/favorite-item')
+const ListItem = require('../models/list-item')
 
 const mongoose = require('mongoose')
 
@@ -19,10 +20,8 @@ const saveItem = async (item) => {
   return Item.create(superItem)
 }
 
-const getItemsForUserId = async (userId) => {
-  return Item.find({
-    userId
-  })
+const getAllItems = async () => {
+  return Item.find({})
 }
 
 const getUser = async (email) => {
@@ -55,13 +54,36 @@ const deleteFavorite = async (itemId) => {
   return FavoriteItem.findByIdAndRemove(itemId)
 }
 
+const getListItems = async (userId) => {
+  return ListItem.find({
+    userId
+  })
+}
+
+const saveListItem = async (item) => {
+  const { name, quantity, userId } = item
+  const listItem = {
+    name,
+    quantity,
+    userId: mongoose.Types.ObjectId(userId)
+  }
+  return ListItem.create(listItem)
+}
+
+const deleteListItem = async (itemId) => {
+  return ListItem.findByIdAndRemove(itemId)
+}
+
 module.exports = {
   saveUser,
   saveItem,
-  getItemsForUserId,
+  getAllItems,
+  getListItems,
   getUser,
   deleteItem,
   saveFavorite,
   getFavoritesForUserId,
-  deleteFavorite
+  deleteFavorite,
+  saveListItem,
+  deleteListItem
 }
