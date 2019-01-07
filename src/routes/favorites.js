@@ -4,8 +4,8 @@ const { saveFavorite, getFavoritesForUserId, deleteFavorite } = require('../help
 const { withAuth } = require('../middleware/auth')
 
 router.post('/', withAuth, async (req, res) => {
-  const { name, userId } = req.body
-  const result = await saveFavorite({ name, userId })
+  const { item, userId } = req.body
+  const result = await saveFavorite({ item, userId })
   const { _id } = result
   if (_id) {
     res.status(200).json(result)

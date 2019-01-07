@@ -1,8 +1,11 @@
 const mongoose = require('mongoose')
 
 const favoriteItemSchema = new mongoose.Schema({
-  name: String,
-  userId: mongoose.Types.ObjectId
+  userId: mongoose.Types.ObjectId,
+  item: {
+    itemId: mongoose.Types.ObjectId,
+    name: String
+  }
 })
 
 const FavoriteItem = mongoose.model('favorite-item', favoriteItemSchema)

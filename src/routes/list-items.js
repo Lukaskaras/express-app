@@ -4,9 +4,13 @@ const { saveListItem, getListItems, deleteListItem } = require('../helpers/db')
 const { withAuth } = require('../middleware/auth')
 
 router.post('/', withAuth, async (req, res) => {
-  const { itemId, quantity, userId } = req.body
-  const item = { itemId, quantity, userId }
-  const result = await saveListItem(item)
+  const { item, quantity, userId } = req.body
+  const listItem = {
+    item,
+    quantity,
+    userId
+  }
+  const result = await saveListItem(listItem)
   const { _id } = result
   if (_id) {
     res.status(200).json(result)

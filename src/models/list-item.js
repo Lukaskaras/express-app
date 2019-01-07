@@ -1,9 +1,12 @@
 const mongoose = require('mongoose')
 
 const listItemSchema = new mongoose.Schema({
-  itemId: mongoose.Types.ObjectId,
   userId: mongoose.Types.ObjectId,
-  quantity: Number
+  quantity: Number,
+  item: {
+    itemId: mongoose.Types.ObjectId,
+    name: String
+  }
 })
 
 const ListItem = mongoose.model('list-item', listItemSchema)

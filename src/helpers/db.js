@@ -34,11 +34,10 @@ const deleteItem = async (itemId) => {
   return Item.findByIdAndRemove(itemId)
 }
 
-const saveFavorite = async (item) => {
-  const { name, quantity, userId } = item
+const saveFavorite = async (favorite) => {
+  const { item, userId } = favorite
   const favItem = {
-    name,
-    quantity,
+    item,
     userId: mongoose.Types.ObjectId(userId)
   }
   return FavoriteItem.create(favItem)
@@ -60,14 +59,14 @@ const getListItems = async (userId) => {
   })
 }
 
-const saveListItem = async (item) => {
-  const { name, quantity, userId } = item
-  const listItem = {
-    name,
+const saveListItem = async (listItem) => {
+  const { item, quantity, userId } = listItem
+  const finalListItem = {
+    item,
     quantity,
     userId: mongoose.Types.ObjectId(userId)
   }
-  return ListItem.create(listItem)
+  return ListItem.create(finalListItem)
 }
 
 const deleteListItem = async (itemId) => {
