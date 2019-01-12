@@ -1,12 +1,11 @@
 const express = require('express')
 const router = express.Router()
-const { saveItem, getItemsForUserId, deleteItem } = require('../helpers/db')
+const { saveItem, deleteItem, getAllItems, searchItem } = require('../helpers/db')
 const { withAuth } = require('../middleware/auth')
 
-router.post('/', async (req, res) => {
-  const { name, quantity, userId } = req.body
-  const item = { name, quantity, userId }
-  const result = await saveItem(item)
+router.post('/', withAuth, async (req, res) => {
+  const { name } = req.body
+  const result = await saveItem({ name })
   const { _id } = result
   if (_id) {
     res.status(200).json(result)
@@ -15,15 +14,20 @@ router.post('/', async (req, res) => {
   }
 })
 
-router.get('/:userId', withAuth, async (req, res) => {
-  const userId = req.params.userId
-  const result = await getItemsForUserId(userId)
-  res.status(200).json(result)
-})
-
 router.delete('/:itemId', withAuth, async (req, res) => {
   const { itemId } = req.params
   const result = await deleteItem(itemId)
+  res.status(200).json(result)
+})
+
+router.get('', withAuth, async (req, res) => {
+  const result = await getAllItems()
+  res.status(200).json(result)
+})
+
+router.get('/search', withAuth, async (req, res) => {
+  const { query } = req.query
+  const result = await searchItem(query)
   res.status(200).json(result)
 })
 
