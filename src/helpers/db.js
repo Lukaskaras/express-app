@@ -24,6 +24,12 @@ const getAllItems = async () => {
   return Item.find({})
 }
 
+const searchItem = async (query) => {
+  return Item.find({
+    name: new RegExp(query, 'i')
+  })
+}
+
 const getUser = async (email) => {
   return User.findOne({
     email
@@ -77,6 +83,7 @@ module.exports = {
   saveUser,
   saveItem,
   getAllItems,
+  searchItem,
   getListItems,
   getUser,
   deleteItem,
