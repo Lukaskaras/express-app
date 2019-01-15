@@ -7,7 +7,7 @@ const userId = '5c3dff877c462653859ddb92'
 const itemName = 'potato'
 const user = {
   email: process.env.TEST_USER_EMAIL,
-  password: process.env.TEST_USER_PASSWORD,
+  password: process.env.TEST_USER_PASSWORD
 }
 
 describe('User logs in, adds item, adds favorite', async () => {
