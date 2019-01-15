@@ -5,6 +5,9 @@ const { withAuth } = require('../middleware/auth')
 
 router.post('/', withAuth, async (req, res) => {
   const { name } = req.body
+  if (!name) {
+    res.status(400).send({ message: 'Property name is missing' })
+  }
   const result = await saveItem({ name })
   const { _id } = result
   if (_id) {

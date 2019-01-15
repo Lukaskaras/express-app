@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const connectMongo = () => {
   const mongoName = process.env.MONGO_NAME
   const mongoPassword = process.env.MONGO_PASSWORD
-  const uri = `mongodb+srv://${mongoName}:${mongoPassword}@cluster0-tijtk.mongodb.net/shopping-list?retryWrites=true`
+  const mongoDbName = process.env.NODE_ENV === 'test' ? 'shopping-list-test' : 'shopping-list'
+  const uri = `mongodb+srv://${mongoName}:${mongoPassword}@cluster0-tijtk.mongodb.net/${mongoDbName}?retryWrites=true`
   console.log(uri)
   mongoose.connect(uri, { useNewUrlParser: true })
   const db = mongoose.connection

@@ -16,7 +16,7 @@ describe('/users', async () => {
         return null
       }
     })
-    const response = await request(app)
+    await request(app)
       .post('/users/register')
       .send({
         email: 'test@user.sk',
@@ -24,7 +24,6 @@ describe('/users', async () => {
         name: 'test'
       })
       .expect(200)
-    expect(response.body._id).to.equal('1')
     findUserStub.restore()
   })
   it('should log user in', async () => {
