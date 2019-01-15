@@ -11,9 +11,8 @@ if (process.env.NODE_ENV !== 'production') {
   dotenv.load()
 }
 
-if (process.env.NODE_ENV !== 'test') {
-  connectMongo()
-}
+connectMongo()
+
 app.use(bodyParser.json({ limit: '5mb' }))
 app.use(bodyParser.urlencoded({ limit: '5mb', extended: false }))
 app.use(cookieParser())

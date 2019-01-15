@@ -4,8 +4,8 @@ const { saveUser, getUser } = require('../helpers/db')
 const { isCorrectPassword, jwtSign } = require('../helpers/auth')
 
 router.post('/register', async (req, res) => {
-  const { email, password, uid, name } = req.body
-  const user = { email, password, uid, name }
+  const { email, password, name } = req.body
+  const user = { email, password, name }
   const exists = await getUser(email)
   if (exists) {
     res.status(400).json({ message: 'Email already exists' })
@@ -14,7 +14,7 @@ router.post('/register', async (req, res) => {
   const result = await saveUser(user)
   const { _id } = result
   if (_id) {
-    res.status(200).json(result)
+    res.status(200).json({ message: 'Registration successful' })
   } else {
     res.status(500).send({ message: 'Unable to register' })
   }
